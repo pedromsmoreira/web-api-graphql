@@ -1,5 +1,7 @@
 ﻿namespace WebApi.Queries
 {
+    using System;
+    using System.Collections.Generic;
     using GraphQL.Types;
     using Models;
     using Repositories;
@@ -12,8 +14,7 @@
 
             this.Field<BookType>(
                 "book",
-                arguments: new QueryArguments(
-                    new QueryArgument<StringGraphType> {Name = "isbn"}),
+                arguments: new QueryArguments(new QueryArgument<StringGraphType> { Name = "isbn" }),
                 resolve: context =>
                 {
                     var id = context.GetArgument<string>("isbn");

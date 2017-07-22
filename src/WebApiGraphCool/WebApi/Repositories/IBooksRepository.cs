@@ -7,6 +7,10 @@
     {
         Book BookByIsbn(string isbn);
 
+        Book GetBook(string name);
+
+        Book GetBookByNameAndIsbn(string name, string isbn);
+
         IEnumerable<Book> AllBooks();
 
         Author AuthorById(int id);

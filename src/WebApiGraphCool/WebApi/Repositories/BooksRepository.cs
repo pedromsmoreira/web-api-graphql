@@ -25,6 +25,16 @@
             return authors;
         }
 
+        public Book GetBook(string name)
+        {
+            return books.First(b => b.Name.Equals(name));
+        }
+
+        public Book GetBookByNameAndIsbn(string name, string isbn)
+        {
+            return books.First(b => b.Name.Equals(name) && b.Isbn == isbn);
+        }
+
         public IEnumerable<Book> AllBooks()
         {
             return books;

@@ -1,6 +1,5 @@
 ﻿namespace WebApi.Controllers
 {
-    using System.Threading.Tasks;
     using System.Web.Http;
     using Attributes;
     using GraphQL;
@@ -13,7 +12,7 @@
         [HttpPost]
         [Route("~/api/graph")]
         [GraphType(typeof(BooksQuery))]
-        public async Task<IHttpActionResult> Post([FromBody] ExecutionResult result)
+        public IHttpActionResult Post([FromBody] ExecutionResult result)
         {
             var json = new DocumentWriter(indent: true).Write(result);
 
