@@ -2,7 +2,7 @@
 
 ## How to use
 
-#For now use Postman
+### For now use Postman
 
 Make a POST Request to http://{your-host}:{port}/graph (in aspnetcore web api) or http://{your-host}:{port}/api/graph (in .NET Framework api)
 with the following body:
@@ -90,3 +90,5 @@ Result:
 }
 ```
 
+# TODO
+[ ] - Make Middleware Generic
