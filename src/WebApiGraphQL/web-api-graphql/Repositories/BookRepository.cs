@@ -1,16 +1,17 @@
 ﻿namespace WebApiGraphQL.Repositories
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Models;
 
-    public class BooksRepository
+    public class BookRepository : IBookRepository
     {
         private static IEnumerable<Book> books = new List<Book>();
         private static IEnumerable<Author> authors = new List<Author>();
         private static IEnumerable<Publisher> publisher = new List<Publisher>();
 
-        public BooksRepository()
+        public BookRepository()
         {
             if (books.Count() == 0)
             {
@@ -23,6 +24,11 @@
         public IEnumerable<Author> AllAuthors()
         {
             return authors;
+        }
+
+        public Book BookBy(Func<Book, bool> predicate)
+        {
+            return books.First(predicate);
         }
 
         public IEnumerable<Book> AllBooks()

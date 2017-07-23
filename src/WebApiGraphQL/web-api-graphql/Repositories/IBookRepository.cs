@@ -1,11 +1,14 @@
 ﻿namespace WebApiGraphQL.Repositories
 {
+    using System;
     using System.Collections.Generic;
     using Models;
 
-    public interface IBooksRepository
+    public interface IBookRepository
     {
         Book BookByIsbn(string isbn);
+
+        Book BookBy(Func<Book, bool> predicate);
 
         IEnumerable<Book> AllBooks();
 
