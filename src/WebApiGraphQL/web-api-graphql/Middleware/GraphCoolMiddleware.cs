@@ -10,7 +10,8 @@
     using Microsoft.AspNetCore.Http;
     using Queries;
     using Repositories;
-
+    
+    // Legacy Middleware Should Not be used. Remains in here for history and to remember hammered times.
     public class GraphCoolMiddleware
     {
         private readonly RequestDelegate next;
@@ -34,7 +35,7 @@
 
                     if (!string.IsNullOrWhiteSpace(query))
                     {
-                        // TODO: Investigate a way to have a Generic Query :) 
+                        // TODO: Investigate a way to have a Generic Query :)
                         var schema = new Schema { Query = new BooksQuery(this.bookRepository) };
 
                         var result = await new DocumentExecuter()
@@ -46,7 +47,7 @@
                             .ConfigureAwait(false);
 
                         this.CheckForErrors(result);
-                        
+
                         await this.WriteResult(httpContext, result);
                         sent = true;
                     }

@@ -1,11 +1,14 @@
 ﻿namespace WebApiGraphQL
 {
     using Extensions;
+    using GraphQL.Types;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
+    using Middleware.GraphQl;
+    using Queries;
     using Repositories;
 
     public class Startup
@@ -37,7 +40,12 @@
             loggerFactory.AddConsole(this.Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            app.UseGraphQl();
+            // TODO: lazyness started :P -> Inject Repository
+            app.UseGraphQl(new GraphQlOptions {
+                GraphQlPath = "/graph",
+                Schema = new Schema { Query = new BooksQuery(app.ApplicationServices.GetService<IBookRepository>()) }
+            });
+
             app.UseMvc();
         }
     }
