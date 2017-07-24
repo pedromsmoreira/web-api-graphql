@@ -14,7 +14,13 @@
         {
             return builder.UseMiddleware<GraphQlMiddleware>();
         }
+        
+        public static IApplicationBuilder UseGraphiQl(this IApplicationBuilder builder)
+        {
+            return builder.UseMiddleware<GraphiQlMiddleware>();
+        }
 
+        // TODO: Maybe delete this method?
         public static IApplicationBuilder UseGraphQl(this IApplicationBuilder builder, GraphQlOptions options)
         {
             if (options == null)
@@ -25,6 +31,7 @@
             return builder.UseMiddleware<GraphQlMiddleware>(Options.Create(options));
         }
 
+        // TODO: Maybe delete this method?
         public static IApplicationBuilder UseGraphiQl(this IApplicationBuilder builder, GraphiQlOptions options)
         {
             if (options == null)
@@ -33,11 +40,6 @@
             }
 
             return builder.UseMiddleware<GraphiQlMiddleware>(Options.Create(options));
-        }
-
-        public static IApplicationBuilder UseGraphiQl(this IApplicationBuilder builder)
-        {
-            return builder.UseMiddleware<GraphiQlMiddleware>();
         }
     }
 }
