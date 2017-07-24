@@ -7,6 +7,7 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
+    using Middleware.GraphiQl;
     using Middleware.GraphQl;
     using Queries;
     using Repositories;
@@ -39,11 +40,15 @@
         {
             loggerFactory.AddConsole(this.Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
-
-            // TODO: lazyness started :P -> Inject Repository
+            
             app.UseGraphQl(new GraphQlOptions {
-                GraphQlPath = "/graph",
+                GraphQlPath = "/graphql",
                 Schema = new Schema { Query = new BooksQuery(app.ApplicationServices.GetService<IBookRepository>()) }
+            });
+
+            app.UseGraphiQl(new GraphiQlOptions
+            {
+                GraphiQLPath = "/graphiql"
             });
 
             app.UseMvc();
