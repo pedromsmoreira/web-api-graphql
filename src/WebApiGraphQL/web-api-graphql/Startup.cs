@@ -7,7 +7,6 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
-    using Middleware.GraphiQl;
     using Middleware.GraphQl;
     using Queries;
     using Repositories;
@@ -40,16 +39,14 @@
         {
             loggerFactory.AddConsole(this.Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
-            
-            app.UseGraphQl(new GraphQlOptions {
+
+            app.UseGraphQl(new GraphQlOptions
+            {
                 GraphQlPath = "/graphql",
                 Schema = new Schema { Query = new BooksQuery(app.ApplicationServices.GetService<IBookRepository>()) }
             });
 
-            app.UseGraphiQl(new GraphiQlOptions
-            {
-                GraphiQLPath = "/graphiql"
-            });
+            app.UseGraphiQl("/graphiql");
 
             app.UseMvc();
         }

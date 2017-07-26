@@ -2,10 +2,7 @@
 {
     using System;
     using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Options;
-    using Middleware;
-    using Middleware.GraphiQl;
     using Middleware.GraphQl;
 
     public static class GraphQlMiddlewareExtensions
@@ -14,13 +11,7 @@
         {
             return builder.UseMiddleware<GraphQlMiddleware>();
         }
-        
-        public static IApplicationBuilder UseGraphiQl(this IApplicationBuilder builder)
-        {
-            return builder.UseMiddleware<GraphiQlMiddleware>();
-        }
 
-        // TODO: Maybe delete this method?
         public static IApplicationBuilder UseGraphQl(this IApplicationBuilder builder, GraphQlOptions options)
         {
             if (options == null)
@@ -29,17 +20,6 @@
             }
 
             return builder.UseMiddleware<GraphQlMiddleware>(Options.Create(options));
-        }
-
-        // TODO: Maybe delete this method?
-        public static IApplicationBuilder UseGraphiQl(this IApplicationBuilder builder, GraphiQlOptions options)
-        {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
-
-            return builder.UseMiddleware<GraphiQlMiddleware>(Options.Create(options));
         }
     }
 }
