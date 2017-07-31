@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Microsoft.Extensions.Caching.Distributed;
     using Models;
 
     public class BookRepository : IBookRepository
@@ -11,8 +12,12 @@
         private static IEnumerable<Author> authors = new List<Author>();
         private static IEnumerable<Publisher> publisher = new List<Publisher>();
 
-        public BookRepository()
+        private readonly IDistributedCache DistributedCache;
+
+        public BookRepository(IDistributedCache distributedCache)
         {
+            this.DistributedCache = distributedCache;
+
             if (books.Any())
             {
                 return;

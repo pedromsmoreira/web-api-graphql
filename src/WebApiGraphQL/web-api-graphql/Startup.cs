@@ -33,6 +33,12 @@
             services.AddMvc();
 
             services.AddSingleton<IBookRepository, BookRepository>();
+
+            services.AddDistributedRedisCache(option =>
+            {
+                option.Configuration = "localhost";
+                option.InstanceName = "master";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
