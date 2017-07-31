@@ -1,5 +1,6 @@
 ﻿namespace WebApiGraphQL
 {
+    using System;
     using Extensions;
     using GraphQL.Types;
     using Microsoft.AspNetCore.Builder;
@@ -11,6 +12,7 @@
     using Middleware.GraphQl;
     using Queries;
     using Repositories;
+    using Schema;
 
     public class Startup
     {
@@ -34,11 +36,12 @@
 
             services.AddSingleton<IBookRepository, BookRepository>();
 
-            services.AddDistributedRedisCache(option =>
-            {
-                option.Configuration = "localhost";
-                option.InstanceName = "master";
-            });
+            // Implement later
+            //services.AddDistributedRedisCache(option =>
+            //{
+            //    option.Configuration = "localhost";
+            //    option.InstanceName = "master";
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,7 +53,11 @@
             app.UseGraphQl(new GraphQlOptions
             {
                 GraphQlPath = "/graphql",
-                Schema = new Schema { Query = new BooksQuery(app.ApplicationServices.GetService<IBookRepository>()) }
+                Schema = new GraphQL.Types.Schema
+                {
+                    Query = new BooksQuery(app.ApplicationServices.GetService<IBookRepository>()),
+                    Mutation = new BooksMutation(app.ApplicationServices.GetService<IBookRepository>())
+                }
             });
 
             app.UseGraphiQL(new GraphiQlOptionsV2

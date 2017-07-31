@@ -8,15 +8,15 @@
 
     public class BookRepository : IBookRepository
     {
-        private static IEnumerable<Book> books = new List<Book>();
+        private static ICollection<Book> books = new List<Book>();
         private static IEnumerable<Author> authors = new List<Author>();
         private static IEnumerable<Publisher> publisher = new List<Publisher>();
 
-        private readonly IDistributedCache DistributedCache;
+        //private readonly IDistributedCache DistributedCache;
 
-        public BookRepository(IDistributedCache distributedCache)
+        public BookRepository(/*IDistributedCache distributedCache*/)
         {
-            this.DistributedCache = distributedCache;
+            //this.DistributedCache = distributedCache;
 
             if (books.Any())
             {
@@ -46,6 +46,24 @@
         public IEnumerable<Publisher> AllPublishers()
         {
             return publisher;
+        }
+
+        public Book AddBook(Book book)
+        {
+            // mutation {
+            //    addBook(book: { name: "book created by mutation "}) 
+            //    {
+            //        isbn
+            //    }
+            //}
+            book.Isbn = Guid.NewGuid().ToString();
+
+            book.Author = authors.First();
+            book.Publisher = publisher.First();
+
+            books.Add(book);
+
+            return book;
         }
 
         public Author AuthorById(int id)

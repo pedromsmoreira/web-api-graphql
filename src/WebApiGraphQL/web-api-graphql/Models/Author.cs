@@ -1,6 +1,7 @@
 ﻿namespace WebApiGraphQL.Models
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     public class Author
@@ -12,6 +13,6 @@
         [Required]
         public DateTime Birthdate { get; set; }
 
-        public Book[] Books { get; set; } = new Book[] { };
+        public ICollection<Book> Books { get; set; } = new List<Book>();
     }
 }

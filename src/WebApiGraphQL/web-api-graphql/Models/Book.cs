@@ -9,8 +9,10 @@
     public class Book
     {
         public string Isbn { get; set; }
+
         [Required]
         public string Name { get; set; }
+
         [Required]
         public Author Author { get; set; } = new Author { };
 
@@ -18,7 +20,7 @@
         public Publisher Publisher { get; set; } = new Publisher { };
 
         private static string[] names = new string[] { "Freddy", "James", "David", "John", "Peter", "Paul" };
-        private static string[] books = new string[] { "A tale of two cities", "Peter's Hand", "The Cryptic Message", "The Messenger", "The law suit", "Music for Kids" };
+        private static IList<string> books = new List<string> { "A tale of two cities", "Peter's Hand", "The Cryptic Message", "The Messenger", "The law suit", "Music for Kids" };
         private static string[] publishers = new string[] { "Macmillan", "Kevins", "Holy Prints" };
 
 
@@ -26,16 +28,25 @@
         {
             foreach (int id in Enumerable.Range(1, count))
             {
+                var isbn = Guid.NewGuid().ToString();
+                var bookPos = Convert.ToInt32(Math.Floor(Number.Rnd() * books.Count));
+
                 yield return new Book
                 {
                     Author = new Author()
                     {
                         Id = id,
                         Name = names[Convert.ToInt32(Math.Floor(Number.Rnd() * names.Length))] + " " + names[Convert.ToInt32(Math.Floor(Number.Rnd() * names.Length))],
-                        Birthdate = DateTime.Now.AddYears(Convert.ToInt32(Math.Floor(Number.Rnd() * 20)))
+                        Birthdate = DateTime.Now.AddYears(Convert.ToInt32(Math.Floor(Number.Rnd() * 20))),
+                        Books = new List<Book> { new Book
+                            {
+                                Isbn = isbn,
+                                Name = books.ElementAt(bookPos)
+                            }
+                        }
                     },
-                    Isbn = Guid.NewGuid().ToString(),
-                    Name = books[Convert.ToInt32(Math.Floor(Number.Rnd() * books.Length))],
+                    Isbn = isbn,
+                    Name = books.ElementAt(bookPos),
                     Publisher = new Publisher()
                     {
                         Id = id,

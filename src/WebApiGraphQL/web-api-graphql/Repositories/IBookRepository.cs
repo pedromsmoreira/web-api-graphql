@@ -19,5 +19,7 @@
         Publisher PublisherById(int id);
 
         IEnumerable<Publisher> AllPublishers();
+
+        Book AddBook(Book book);
     }
 }

@@ -8,7 +8,7 @@ namespace WebApiGraphQL.Models
         {
             Field(x => x.Id).Description("The id of the author.");
             Field(x => x.Name).Description("The name of the author.");
-            Field<BookType>("books");
+            Field<ListGraphType<BookType>>("books");
         }
     }
 }
