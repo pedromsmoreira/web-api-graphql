@@ -1,15 +1,17 @@
 ﻿namespace WebApiGraphQL.Models
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     public class Publisher
     {
         public int Id { get; set; }
+
         [Required]
         public string Name { get; set; }
 
-        public Book[] Books { get; set; } = new Book[] { };
+        public ICollection<Book> Books { get; set; } = new List<Book>();
 
-        public Author[] Authors { get; set; } = new Author[] { };
+        public ICollection<Author> Authors { get; set; } = new List<Author>();
     }
 }

@@ -19,10 +19,9 @@
         [Required]
         public Publisher Publisher { get; set; } = new Publisher { };
 
-        private static string[] names = new string[] { "Freddy", "James", "David", "John", "Peter", "Paul" };
+        private static IList<string> names = new List<string> { "Freddy", "James", "David", "John", "Peter", "Paul" };
         private static IList<string> books = new List<string> { "A tale of two cities", "Peter's Hand", "The Cryptic Message", "The Messenger", "The law suit", "Music for Kids" };
         private static string[] publishers = new string[] { "Macmillan", "Kevins", "Holy Prints" };
-
 
         public static IEnumerable<Book> GetBooks(int count)
         {
@@ -31,12 +30,17 @@
                 var isbn = Guid.NewGuid().ToString();
                 var bookPos = Convert.ToInt32(Math.Floor(Number.Rnd() * books.Count));
 
+                var authorFirstname = Convert.ToInt32(Math.Floor(Number.Rnd() * names.Count));
+                var authorLastname = Convert.ToInt32(Math.Floor(Number.Rnd() * names.Count));
+
+                var publisherName = Convert.ToInt32(Math.Floor(Number.Rnd() * publishers.Length));
+
                 yield return new Book
                 {
                     Author = new Author()
                     {
                         Id = id,
-                        Name = names[Convert.ToInt32(Math.Floor(Number.Rnd() * names.Length))] + " " + names[Convert.ToInt32(Math.Floor(Number.Rnd() * names.Length))],
+                        Name = names[authorFirstname] + " " + names[authorLastname],
                         Birthdate = DateTime.Now.AddYears(Convert.ToInt32(Math.Floor(Number.Rnd() * 20))),
                         Books = new List<Book> { new Book
                             {
@@ -50,7 +54,26 @@
                     Publisher = new Publisher()
                     {
                         Id = id,
-                        Name = publishers[Convert.ToInt32(Math.Floor(Number.Rnd() * publishers.Length))]
+                        Name = publishers[publisherName],
+                        Books = new List<Book> { new Book
+                            {
+                                Isbn = isbn,
+                                Name = books.ElementAt(bookPos)
+                            },
+                            new Book
+                                {
+                                    Isbn = isbn,
+                                    Name = books.ElementAt(bookPos + 1)
+                                }
+                            },
+                        Authors = new List<Author>
+                        {
+                            new Author
+                            {
+                                Name = names[authorFirstname] + " " + names[authorLastname],
+                                Id = id
+                            }
+                        }
                     }
                 };
             }
