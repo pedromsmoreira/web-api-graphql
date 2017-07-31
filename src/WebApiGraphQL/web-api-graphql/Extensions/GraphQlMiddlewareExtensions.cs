@@ -2,9 +2,7 @@
 {
     using System;
     using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Options;
-    using Middleware;
     using Middleware.GraphQl;
 
     public static class GraphQlMiddlewareExtensions

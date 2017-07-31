@@ -1,4 +1,4 @@
-﻿namespace WebApiGraphQL.Middleware
+﻿namespace WebApiGraphQL.Middleware.Deprecated
 {
     using System;
     using System.Collections.Generic;
@@ -10,7 +10,7 @@
     using Microsoft.AspNetCore.Http;
     using Queries;
     using Repositories;
-    
+
     // Legacy Middleware Should Not be used. Remains in here for history and to remember hammered times.
     public class GraphCoolMiddleware
     {

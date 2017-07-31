@@ -40,11 +40,13 @@
             loggerFactory.AddConsole(this.Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            // TODO: lazyness started :P -> Inject Repository
-            app.UseGraphQl(new GraphQlOptions {
-                GraphQlPath = "/graph",
+            app.UseGraphQl(new GraphQlOptions
+            {
+                GraphQlPath = "/graphql",
                 Schema = new Schema { Query = new BooksQuery(app.ApplicationServices.GetService<IBookRepository>()) }
             });
+
+            app.UseGraphiQl("/graphiql");
 
             app.UseMvc();
         }

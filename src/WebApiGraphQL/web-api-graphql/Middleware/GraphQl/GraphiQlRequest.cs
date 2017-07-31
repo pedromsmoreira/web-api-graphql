@@ -1,6 +1,6 @@
 ﻿namespace WebApiGraphQL.Middleware.GraphQl
 {
-    internal sealed class GraphQlRequest
+    internal sealed class GraphiQlRequest
     {
         public string OperationName { get; set; }
 
