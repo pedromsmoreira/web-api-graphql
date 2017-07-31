@@ -19,13 +19,13 @@
         [Required]
         public Publisher Publisher { get; set; } = new Publisher { };
 
-        private static IList<string> names = new List<string> { "Freddy", "James", "David", "John", "Peter", "Paul" };
-        private static IList<string> books = new List<string> { "A tale of two cities", "Peter's Hand", "The Cryptic Message", "The Messenger", "The law suit", "Music for Kids" };
-        private static string[] publishers = new string[] { "Macmillan", "Kevins", "Holy Prints" };
+        private static readonly IList<string> names = new List<string> { "Freddy", "James", "David", "John", "Peter", "Paul" };
+        private static readonly IList<string> books = new List<string> { "A tale of two cities", "Peter's Hand", "The Cryptic Message", "The Messenger", "The law suit", "Music for Kids" };
+        private static readonly IList<string> publishers = new List<string> { "Macmillan", "Kevins", "Holy Prints" };
 
         public static IEnumerable<Book> GetBooks(int count)
         {
-            foreach (int id in Enumerable.Range(1, count))
+            foreach (var id in Enumerable.Range(1, count))
             {
                 var isbn = Guid.NewGuid().ToString();
                 var bookPos = Convert.ToInt32(Math.Floor(Number.Rnd() * books.Count));
@@ -33,7 +33,7 @@
                 var authorFirstname = Convert.ToInt32(Math.Floor(Number.Rnd() * names.Count));
                 var authorLastname = Convert.ToInt32(Math.Floor(Number.Rnd() * names.Count));
 
-                var publisherName = Convert.ToInt32(Math.Floor(Number.Rnd() * publishers.Length));
+                var publisherName = Convert.ToInt32(Math.Floor(Number.Rnd() * publishers.Count));
 
                 yield return new Book
                 {
