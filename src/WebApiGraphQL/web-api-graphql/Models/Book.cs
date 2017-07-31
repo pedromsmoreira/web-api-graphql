@@ -38,7 +38,7 @@
                     Name = books[Convert.ToInt32(Math.Floor(Number.Rnd() * books.Length))],
                     Publisher = new Publisher()
                     {
-                        //Id = id,
+                        Id = id,
                         Name = publishers[Convert.ToInt32(Math.Floor(Number.Rnd() * publishers.Length))]
                     }
                 };

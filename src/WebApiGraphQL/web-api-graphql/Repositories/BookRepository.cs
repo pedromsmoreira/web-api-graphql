@@ -13,12 +13,14 @@
 
         public BookRepository()
         {
-            if (books.Count() == 0)
+            if (books.Any())
             {
-                books = Book.GetBooks(10).ToList();
-                authors = books.Select(book => book.Author).ToList();
-                publisher = books.Select(book => book.Publisher).ToList();
+                return;
             }
+
+            books = Book.GetBooks(10).ToList();
+            authors = books.Select(book => book.Author).ToList();
+            publisher = books.Select(book => book.Publisher).ToList();
         }
 
         public IEnumerable<Author> AllAuthors()

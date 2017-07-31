@@ -13,9 +13,9 @@
 
     public sealed class GraphQlMiddleware
     {
-        private readonly string path;
-        private readonly RequestDelegate next;
-        private readonly ISchema schema;
+        private readonly string Path;
+        private readonly RequestDelegate Next;
+        private readonly ISchema Schema;
 
         public GraphQlMiddleware(RequestDelegate next, IOptions<GraphQlOptions> options)
         {
@@ -29,14 +29,15 @@
                 throw new ArgumentException("Schema is null!");
             }
 
-            this.next = next ?? throw new ArgumentNullException(nameof(next));
+            // Duplicated code in GraphiQlMiddleware too! Optimize later.
+            this.Next = next ?? throw new ArgumentNullException(nameof(next));
             var graphqlOptions = options.Value;
 
-            this.path = string.IsNullOrEmpty(graphqlOptions?.GraphQlPath)
+            this.Path = string.IsNullOrEmpty(graphqlOptions?.GraphQlPath)
                 ? GraphQlOptions.DefaultPath
                 : graphqlOptions.GraphQlPath;
 
-            this.schema = graphqlOptions?.Schema;
+            this.Schema = graphqlOptions?.Schema;
         }
 
         public async Task Invoke(HttpContext context)
@@ -48,7 +49,7 @@
 
             if (!this.IsGraphQlRequest(context))
             {
-                await this.next(context).ConfigureAwait(false);
+                await this.Next(context).ConfigureAwait(false);
                 return;
             }
 
@@ -58,7 +59,7 @@
         private bool IsGraphQlRequest(HttpContext context)
         {
             var validHttpMethod = string.Equals(context.Request.Method, "POST", StringComparison.OrdinalIgnoreCase);
-            var validRequestPath = context.Request.Path.StartsWithSegments(this.path);
+            var validRequestPath = context.Request.Path.StartsWithSegments(this.Path);
 
             return validHttpMethod && validRequestPath;
         }
@@ -102,7 +103,7 @@
             }
             catch (Exception)
             {
-                // Log or Throw Exception
+                // muahahahhaha does nothing! Surprise :)
             }
 
             return request;
@@ -114,7 +115,7 @@
             {
                 return await new DocumentExecuter().ExecuteAsync(options =>
                 {
-                    options.Schema = this.schema;
+                    options.Schema = this.Schema;
                     options.Query = request.Query;
                     options.OperationName = request.OperationName;
                     options.Inputs = request.Variables.ToInputs();
@@ -123,7 +124,7 @@
 
             return await new DocumentExecuter().ExecuteAsync(options =>
             {
-                options.Schema = this.schema;
+                options.Schema = this.Schema;
                 options.Query = query;
             });
         }
