@@ -6,9 +6,9 @@ namespace WebApiGraphQL.Models
     {
         public AuthorType()
         {
-            Field(x => x.Id).Description("The id of the author.");
-            Field(x => x.Name).Description("The name of the author.");
-            Field<ListGraphType<BookType>>("books");
+            this.Field(x => x.Id).Description("The id of the author.");
+            this.Field(x => x.Name).Description("The name of the author.");
+            this.Field<ListGraphType<BookType>>("books");
         }
     }
 }

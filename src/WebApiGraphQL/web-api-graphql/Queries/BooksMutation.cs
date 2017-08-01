@@ -11,8 +11,23 @@
 
         public BooksMutation(IBookRepository bookRepository)
         {
+            // mutation {
+            //    addBook(book: { name: "book created by mutation "}) 
+            //    {
+            //        isbn
+            //    }
+            //}
+
+            //mutation {
+            //    addBook(book: { name: "book created by mutation "}) 
+            //    {
+            //        isbn,
+            //        author { name },
+            //        publisher { name }
+            //    }
+            //}
             this.BookRepository = bookRepository;
-            Name = "Mutation";
+            this.Name = "mutation";
 
             this.Field<BookType>(
                 "addBook",

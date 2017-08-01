@@ -50,12 +50,6 @@
 
         public Book AddBook(Book book)
         {
-            // mutation {
-            //    addBook(book: { name: "book created by mutation "}) 
-            //    {
-            //        isbn
-            //    }
-            //}
             book.Isbn = Guid.NewGuid().ToString();
 
             book.Author = authors.First();
