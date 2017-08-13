@@ -1,5 +1,7 @@
 # web-api-graphql
 
+[![CodeFactor](https://www.codefactor.io/repository/github/pedromsmoreira/web-api-graphql/badge)](https://www.codefactor.io/repository/github/pedromsmoreira/web-api-graphql)
+
 ## How to use
 
 ### For now use Postman
